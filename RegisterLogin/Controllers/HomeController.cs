@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using BusinessClass.Comment;
 using System.Collections.Generic;
 using System.Collections;
-using BusinessClass.Comment;
 
 namespace Controllers.GameInfoController
 {
