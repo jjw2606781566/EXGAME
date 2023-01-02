@@ -52,7 +52,7 @@ namespace BusinessClass.Comment
             reason = "";
             return CommentNum;
         }
-        public bool PublishComment(Comment comment, out string reason)
+        public static bool PublishComment(Comment comment, out string reason)
         {
             DBHelper.isOpened();
             OracleCommand cmd = DBHelper.con.CreateCommand();
