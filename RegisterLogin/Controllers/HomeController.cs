@@ -19,11 +19,13 @@ namespace Controllers.GameInfoController
         {
             Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
             int page = 0;
+            string reason;
             List<Comment> comment_list = new List<Comment>();
-            int CommentNum = Comment.GetComment(req.game_id, out page, comment_list);
+            int CommentNum = Comment.GetComment(req.game_id, out page, comment_list, out reason);
             result.Add("comment_list", comment_list);
             result.Add("page", page);
             result.Add("CommentNum", CommentNum);
+            result.Add("reason", reason);
             return result;
         }
     }

@@ -1,9 +1,8 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using DataBase;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
-using System.Xml.Linq;
+
 
 namespace BusinessClass.Comment
 {
@@ -18,7 +17,7 @@ namespace BusinessClass.Comment
         public int rating;
         public string send_time;
         //方法
-        public static int GetComment(string game_id, out int page, List<Comment> comment_list)
+        public static int GetComment(string game_id, out int page, List<Comment> comment_list, out string reason)
         {
             DBHelper.isOpened();
             OracleCommand cmd = DBHelper.con.CreateCommand();
@@ -45,12 +44,51 @@ namespace BusinessClass.Comment
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                reason = e.Message;
                 page = 0;
                 return -1;
             }
             page = CommentNum / MaxPageComments + 1;
+            reason = "";
             return CommentNum;
+        }
+        public bool PublishComment(Comment comment, out string reason)
+        {
+            DBHelper.isOpened();
+            OracleCommand cmd = DBHelper.con.CreateCommand();
+            cmd.CommandText = "SELECT RATING FROM COMMENTS WHERE USER_ID = '" + comment.user_id + "' AND GAME_ID = '" + comment.game_id + "'";
+            OracleDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reason = "该用户已发表过该游戏评论";
+                return false;
+            }
+            cmd.CommandText = "INSERT INTO COMMENTS VALUES('" + comment.user_id + "','" + comment.game_id + "'," + comment.rating + ",'" + comment.content + "',0,0,'" + "',to_date('" + DateTime.Now.ToString("yyyy-MM-dd") + "','yyyy-mm-dd'))";
+            int cen = cmd.ExecuteNonQuery();
+            if (cen == 0)
+            {
+                cmd.CommandText = "ROLLBACK";
+                cen = cmd.ExecuteNonQuery();
+                reason = "添加新comment失败";
+                return false;  //修改失败
+            }
+            else
+            {
+                try
+                {
+                    cmd.CommandText = "COMMIT";
+                    cen = cmd.ExecuteNonQuery();
+                    reason = "添加成功";
+                }
+                catch (Exception e)
+                {
+                    cmd.CommandText = "ROLLBACK";
+                    cen = cmd.ExecuteNonQuery();
+                    reason = e.Message.ToString();
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
