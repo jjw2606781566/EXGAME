@@ -2,8 +2,6 @@
 using System;
 using DataBase;
 using System.Collections.Generic;
-using System.Drawing;
-using System.ComponentModel.Design;
 
 
 namespace BusinessClass.Comment

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BusinessClass.Discount;
 
 namespace Controllers.GameInfoController
 {
@@ -61,6 +62,41 @@ namespace Controllers.GameInfoController
             Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
             string reason;
             bool result = Comment.EvaluateComment(req.user_id, req.game_id, req.evaluation, out reason);
+            resp.Add("result", result);
+            resp.Add("reason", reason);
+            return resp;
+        }
+        [HttpPost]
+        [Route("api/GameInfoSubsys/GetGameDiscount")]
+        public Dictionary<string, dynamic> GetGameDiscountController([FromBody] Discount req)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string reason;
+            Discount discount = new Discount();
+            bool result = Discount.GetGameDiscount(req.game_id, discount, out reason);
+            resp.Add("discount", discount);
+            resp.Add("result", result);
+            resp.Add("reason", reason);
+            return resp;
+        }
+        [HttpPost]
+        [Route("api/GameInfoSubsys/SavePublishDiscountRequest")]
+        public Dictionary<string, dynamic> SavePublishDiscountRequestController([FromBody] Discount req)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string reason;
+            bool result = Discount.SavePublishDiscountRequest(req, out reason);
+            resp.Add("result", result);
+            resp.Add("reason", reason);
+            return resp;
+        }
+        [HttpPost]
+        [Route("api/GameInfoSubsys/DeleteDiscount")]
+        public Dictionary<string, dynamic> DeleteDiscountController([FromBody] Discount req)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string reason;
+            bool result = Discount.DeleteDiscount(req.game_id, out reason);
             resp.Add("result", result);
             resp.Add("reason", reason);
             return resp;
