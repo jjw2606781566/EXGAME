@@ -460,5 +460,58 @@ namespace exgame.BusinessClass
             }
             return game_list.Count;
         }
+        public static int CDKExchange(string uid, string cdk, string result)
+        {
+            DBHelper.isOpened();
+            OracleCommand cmd = DBHelper.con.CreateCommand();
+
+            OracleDataReader reader;
+            string gid = "";        //game id corresponds to the cdk
+            cmd.CommandText = $"SELECT HAVE_USED, GAME_ID FROM CDKS WHERE CDK_VALUE='{cdk}'";
+            try
+            {
+                reader = cmd.ExecuteReader();
+                if (!reader.HasRows)        //cdk not exists
+                {
+                    result = "CDK不存在";
+                    return 0;
+                }
+
+                if (reader.Read())
+                {
+                    int used = int.Parse(reader[0].ToString());
+
+                    //check if cdk is already used 
+                    if (used == 1)    
+                    {
+                        result = "CDK已被使用";
+                        return -1;
+                    }
+
+                    /* check whether user already owns the game */
+                    gid = reader[1].ToString();
+                    int has_game = GameLib.GameInLib(uid, gid, result);
+                    if (has_game == 1)
+                    {
+                        result = "玩家已拥有该游戏";
+                        return 2;
+                    }
+                    /* set cdk invalid and add game to user lib */
+                    cmd.CommandText = $"UPDATE CDKS SET HAVE_USED=1 WHERE CDK_VALUE='{cdk}'";
+                    cmd.ExecuteNonQuery();
+                    if (Order.CreateOrder(uid, gid, 0, 0, uid) == 1 && GameLib.AddGame2Lib(gid, uid, result) == 1)
+                        result = "兑换成功";
+                    else
+                        result = "兑换失败";
+                }
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+                return -1;
+            }
+
+            return 1;
+        }
     }
 }
