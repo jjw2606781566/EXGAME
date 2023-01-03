@@ -121,6 +121,7 @@ namespace exgame.Controllers
             resp.Add("cover", game.cover);
             resp.Add("genral_intro", game.general_intro);
             resp.Add("result", ret);
+            resp.Add("reason", result);
             return resp;
         }
     }

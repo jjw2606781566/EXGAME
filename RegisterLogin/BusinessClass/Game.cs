@@ -26,11 +26,11 @@ namespace exgame.BusinessClass
         public int dislike_num;
         public int tot_deal_num;
         public string rating;
-        public List<String> language;
-        public List<String> video;
-        public List<String> intro_photo;
-        public List<String> tag_list;
-        public List<String> cdk_list;
+        public List<string> language;
+        public List<string> video;
+        public List<string> intro_photo;
+        public List<string> tag_list;
+        public List<string> cdk_list;
 
 
         public static int GameExisis(string gid, string result)
