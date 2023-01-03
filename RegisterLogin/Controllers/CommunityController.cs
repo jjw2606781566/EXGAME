@@ -108,5 +108,20 @@ namespace exgame.Controllers
 
             return resp;
         }
+
+        [HttpPost]
+        [Route("api/column/getGameColumnReplies")]
+        public Dictionary<string, dynamic> GetReplies([FromBody] Column column)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string result = "";
+            List<Reply> reply_list = new List<Reply>();
+            int ret = Reply.GetColumnReply(column.id, reply_list, result);
+            resp.Add("replies", reply_list);
+            resp.Add("result", ret);
+            resp.Add("reason", result);
+
+            return resp;
+        }
     }
 }

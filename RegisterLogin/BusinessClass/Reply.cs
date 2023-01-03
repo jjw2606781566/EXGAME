@@ -91,5 +91,36 @@ namespace exgame.BusinessClass
 
             return ret;
         }
+
+        public static int GetColumnReply(string cid, List<Reply> replies, string result)
+        {
+            int ret = Column.ColumnExists(cid, result);
+            if (ret == 1)
+            {
+                DBHelper.isOpened();
+                OracleCommand cmd = DBHelper.con.CreateCommand();
+                cmd.CommandText = "SELECT USER_ID,reply_content,reply_time FROM reply_column WHERE COLUMN_ID = '" + cid + "' order by reply_time";
+                OracleDataReader reader = cmd.ExecuteReader();
+
+                try
+                {
+                    //查找成功，赋值变量
+                    while (reader.Read())
+                    {
+                        Reply reply = new Reply();
+                        reply.content = reader[1].ToString();
+                        reply.player.id = reader[0].ToString();
+                    }
+                    ret = 1;
+                } 
+                catch (Exception e)
+                {
+                    result = e.Message;
+                    ret = -1;
+                }
+            }
+
+            return ret;
+        }
     }
 }
