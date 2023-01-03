@@ -38,11 +38,11 @@ namespace exgame.BusinessClass
             DBHelper.isOpened();
             OracleCommand cmd = DBHelper.con.CreateCommand();
             cmd.CommandText = $"SELECT NAME FROM GAME WHERE ID = '{gid}'";
-            OracleDataReader reader = cmd.ExecuteReader();
-
+            
             int ret = 0;
             try
             {
+                OracleDataReader reader = cmd.ExecuteReader();
                 ret = reader.Read() ? 1 : 0;
                 result = "";
             }
@@ -59,12 +59,12 @@ namespace exgame.BusinessClass
         {
             DBHelper.isOpened();
             OracleCommand cmd = DBHelper.con.CreateCommand();
-            cmd.CommandText = $"SELECT NAME, PUBLISHER_ID, COVER, GENERAL_INTRO, IS_DLC FROM GAME WHERE ID = '{gid}";
-            OracleDataReader reader = cmd.ExecuteReader();
+            cmd.CommandText = $"SELECT NAME, PUBLISHER_ID, COVER, GENERAL_INTRO, IS_DLC FROM GAME WHERE ID = '{gid}";            
 
             int ret = 0;
             try
             {
+                OracleDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
                     name = reader[0].ToString();
