@@ -50,13 +50,13 @@ namespace exgame.Controllers
             resp.Add("reason", reason);
             return resp;
         }
+
         public class EvaluateCommentRequest
         {
             public string user_id;
             public string game_id;
             public int evaluation;
         }
-
         [HttpPost]
         [Route("api/GameInfoSubsys/EvaluateComment")]
         public Dictionary<string, dynamic> EvaluateCommentController([FromBody] EvaluateCommentRequest req)

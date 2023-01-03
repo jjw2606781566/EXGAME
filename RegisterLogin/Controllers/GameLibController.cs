@@ -25,5 +25,23 @@ namespace exgame.Controllers
 
             return resp;
         }
+
+        public class Add2LibRequest
+        {
+            public string user_id;
+            public string game_id;
+        }
+        [HttpPost]
+        [Route("api/shopingcart/addToLibrary")]
+        public Dictionary<string, dynamic> AddGame2Lib([FromBody] Add2LibRequest req)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string result = "";
+            int ret = GameLib.AddGame2Lib(req.user_id, req.game_id, result);
+            resp.Add("result", ret);
+            resp.Add("reason", result);
+
+            return resp;
+        }
     }
 }

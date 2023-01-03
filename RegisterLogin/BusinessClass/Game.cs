@@ -33,7 +33,7 @@ namespace exgame.BusinessClass
         public List<string> cdk_list;
 
 
-        public static int GameExisis(string gid, string result)
+        public static int GameExists(string gid, string result)
         {
             DBHelper.isOpened();
             OracleCommand cmd = DBHelper.con.CreateCommand();
