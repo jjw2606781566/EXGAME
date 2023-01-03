@@ -42,6 +42,6 @@ namespace exgame.Controllers
             resp.Add("reason", result);
 
             return resp;
-        }
+        }               
     }
 }
