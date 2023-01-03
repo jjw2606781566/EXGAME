@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterLogin", "RegisterLogin\RegisterLogin.csproj", "{70A79342-1EC1-49C3-B24C-9C12B7532795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "exgame", "RegisterLogin\exgame.csproj", "{70A79342-1EC1-49C3-B24C-9C12B7532795}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

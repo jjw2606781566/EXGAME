@@ -1,10 +1,9 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
-using DataBase;
 using System.Collections.Generic;
 
 
-namespace BusinessClass.Comment
+namespace exgame.BusinessClass
 {
     public class Comment
     {

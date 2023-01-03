@@ -1,12 +1,10 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
-using DataBase;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BusinessClass.Comment;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BusinessClass.Discount
+namespace exgame.BusinessClass
 {
     public class Discount
     {

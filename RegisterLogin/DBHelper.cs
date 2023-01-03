@@ -1,7 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 
-namespace DataBase
+namespace exgame
 {
     public class DBHelper
     {
