@@ -80,5 +80,33 @@ namespace exgame.Controllers
 
             return resp;
         }
+
+        [HttpPost]
+        [Route("api/column/replyColumn")]
+        public Dictionary<string, dynamic> ReplyColumn([FromBody] Reply reply)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string result = "";
+            List<string> column_list = new List<string>();
+            int ret = Reply.PublishReply(reply.player.id, reply.column_id, reply.content, reply.time, result);
+            resp.Add("result", ret);
+            resp.Add("reason", result);
+
+            return resp;
+        }
+
+        [HttpPost]
+        [Route("api/column/deleteReply")]
+        public Dictionary<string, dynamic> DeleteReply([FromBody] Reply reply)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string result = "";
+            List<string> column_list = new List<string>();
+            int ret = Reply.DeleteReply(reply.player.id, reply.column_id, result);
+            resp.Add("result", ret);
+            resp.Add("reason", result);
+
+            return resp;
+        }
     }
 }
