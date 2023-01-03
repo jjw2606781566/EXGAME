@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using BusinessClass.Comment;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BusinessClass.Discount;
+using exgame.BusinessClass;
 
-namespace Controllers.GameInfoController
+namespace exgame.Controllers
 {
     [ApiController]
     public class GameInfoController : Controller
@@ -27,6 +26,7 @@ namespace Controllers.GameInfoController
             resp.Add("reason", reason);
             return resp;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/PublishComment")]
         public Dictionary<string, dynamic> PublishCommentController([FromBody] Comment req)
@@ -38,6 +38,7 @@ namespace Controllers.GameInfoController
             resp.Add("reason", reason);
             return resp;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/DeleteComment")]
         public Dictionary<string, dynamic> DeleteCommentController([FromBody] Comment req)
@@ -55,6 +56,7 @@ namespace Controllers.GameInfoController
             public string game_id;
             public int evaluation;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/EvaluateComment")]
         public Dictionary<string, dynamic> EvaluateCommentController([FromBody] EvaluateCommentRequest req)
@@ -66,6 +68,7 @@ namespace Controllers.GameInfoController
             resp.Add("reason", reason);
             return resp;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/GetGameDiscount")]
         public Dictionary<string, dynamic> GetGameDiscountController([FromBody] Discount req)
@@ -79,6 +82,7 @@ namespace Controllers.GameInfoController
             resp.Add("reason", reason);
             return resp;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/SavePublishDiscountRequest")]
         public Dictionary<string, dynamic> SavePublishDiscountRequestController([FromBody] Discount req)
@@ -90,6 +94,7 @@ namespace Controllers.GameInfoController
             resp.Add("reason", reason);
             return resp;
         }
+
         [HttpPost]
         [Route("api/GameInfoSubsys/DeleteDiscount")]
         public Dictionary<string, dynamic> DeleteDiscountController([FromBody] Discount req)
@@ -99,6 +104,23 @@ namespace Controllers.GameInfoController
             bool result = Discount.DeleteDiscount(req.game_id, out reason);
             resp.Add("result", result);
             resp.Add("reason", reason);
+            return resp;
+        }
+
+        [HttpPost]
+        [Route("api/gamedetail/getGameIntro")]
+        public Dictionary<string, dynamic> GetGameProfile([FromBody] Game req)
+        {
+            Dictionary<string, dynamic> resp = new Dictionary<string, dynamic>();
+            string result = "";
+            Game game = new Game();
+            int ret = Game.GetGameBriefIntro(req.id, game.name, game.publisher_id, game.is_dlc, game.cover, game.general_intro, result);
+            resp.Add("name", game.name);
+            resp.Add("publisher_id", game.publisher_id);
+            resp.Add("is_dlc", game.is_dlc);
+            resp.Add("cover", game.cover);
+            resp.Add("genral_intro", game.general_intro);
+            resp.Add("result", ret);
             return resp;
         }
     }
