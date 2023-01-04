@@ -6,7 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace exgame.BusinessClass
 {
-    public class User
+    public class ExUser
     {
         public string id;
         public string name;

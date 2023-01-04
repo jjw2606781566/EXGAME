@@ -6,7 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace exgame.BusinessClass
 {
-    public class Player:User
+    public class Player:ExUser
     {
         public DateTime birthday;
         public string intro;
